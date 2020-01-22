@@ -1,0 +1,90 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-allopen'
+apply plugin: 'kotlin-kapt'
+apply plugin: "androidx.navigation.safeargs.kotlin"
+
+allOpen {
+    // allows mocking for classes w/o directly opening them for release builds
+    annotation 'com.bravedroid.boilerplate.util.OpenClass'
+}
+
+android {
+    compileSdkVersion 29
+    defaultConfig {
+        applicationId "com.bravedroid.boilerplate"
+        minSdkVersion 21
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+    lintOptions {
+        abortOnError false
+    }
+    dataBinding {
+        enabled = true
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+
+    //kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$version_kotlin"
+    //androidx
+    implementation "androidx.core:core-ktx:$version_core_ktx"
+    implementation "androidx.appcompat:appcompat:$version_appcompat"
+    implementation "androidx.fragment:fragment-ktx:$version_fragment_ktx"
+    implementation "androidx.legacy:legacy-support-v4:$version_legacy_support_v4"
+    //jetpack navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:$version_nav"
+    implementation "androidx.navigation:navigation-ui-ktx:$version_nav"
+    //ui tools
+    implementation "androidx.constraintlayout:constraintlayout:$version_constraintlayout"
+    implementation "com.google.android.material:material:$version_android_material"
+
+
+    ///jvm-tests
+    testImplementation "junit:junit:$version_junit"
+    //Mockito framework
+    testImplementation "org.mockito:mockito-core:$version_mockito_core"
+    //Robolectric environment
+    testImplementation "androidx.test:core:$version_test_core"
+
+    ///instrumented-tests
+    //FragmentScenario
+    implementation "androidx.fragment:fragment-testing:$version_fragment_testing"
+    //Core library
+    androidTestImplementation "androidx.test:core:$version_test_core"
+    //AndroidJUnitRunner and JUnit Rules
+    androidTestImplementation "androidx.test:runner:$version_test_core"
+    androidTestImplementation "androidx.test:rules:$version_test_rules"
+    //Mockito framework
+    androidTestImplementation "org.mockito:mockito-android:$version_mockito_core"
+    //Espresso
+    androidTestImplementation "androidx.test.espresso:espresso-core:$version_espresso_core"
+    // UI testing with UI Automator
+    androidTestImplementation "androidx.test.uiautomator:uiautomator:$version_test_uiautomator"
+    //Assertions
+    androidTestImplementation "androidx.test.ext:junit:$version_test_ext_junit"
+    androidTestImplementation "androidx.test.ext:truth:$version_test_ext_truth"
+    androidTestImplementation "com.google.truth:truth:$version_truth"
+    // Hamcrest library
+    androidTestImplementation "org.hamcrest:hamcrest-library:$version_hamcrest_library"
+}
