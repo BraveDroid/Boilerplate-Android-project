@@ -20,18 +20,23 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField 'String', 'TWITTER_CONSUMER_KEY', "\"${TwitterConsumerKeyProp}\""
+        buildConfigField 'String', 'TWITTER_CONSUMER_SECRET', "\"${TwitterConsumerSecretProp}\""
     }
-    signingConfigs {
-        def keystorePropertiesFile = rootProject.file(".properties/keystore.properties")
-        def keystoreProperties = new Properties()
-        if (keystorePropertiesFile.exists()) {
-            keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-        }
-        release {
-            keyAlias keystoreProperties['keyAlias'] ?: "keystore"
-            keyPassword keystoreProperties['keyPassword'] ?: "H888h888"
-            storePassword keystoreProperties['storePassword'] ?: "H888h888"
-            storeFile file(keystoreProperties['storeFile'] ?: ".keystore/boilerplate_keystore.jks")
+    def isFromGithubActions = System.getenv("IS_FROM_GITHUB_ACTIONS")
+    if (isFromGithubActions == null) {
+        signingConfigs {
+            def keystorePropertiesFile = rootProject.file(".properties/keystore.properties")
+            def keystoreProperties = new Properties()
+            if (keystorePropertiesFile.exists()) {
+                keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+            }
+            release {
+                keyAlias keystoreProperties['keyAlias']
+                keyPassword keystoreProperties['keyPassword']
+                storePassword keystoreProperties['storePassword']
+                storeFile file(keystoreProperties['storeFile'])
+            }
         }
     }
     buildTypes {
@@ -40,13 +45,13 @@ android {
             manifestPlaceholders = [appLabel: "Boilerplate"]
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField "String", "SERVER_URL", '"http://test.this-is-so-fake.com"'
+            buildConfigField "String", "SERVER_URL", '"http://bravedroid.com"'
         }
         debug {
             manifestPlaceholders = [appLabel: "debug.Boilerplate"]
             applicationIdSuffix ".debug"
             debuggable true
-            buildConfigField "String", "SERVER_URL", '"http://dev.test.this-is-so-fake.com"'
+            buildConfigField "String", "SERVER_URL", '"http://test.http://bravedroid.com"'
         }
     }
     flavorDimensions "pricing"
@@ -72,12 +77,7 @@ android {
         enabled = true
     }
 }
-configurations {
-//    devDebugImplementation {}
-//    qaDebugImplementation {
-//    }
-//    prodDebugImplementation {}
-}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -131,14 +131,10 @@ dependencies {
     debugImplementation "com.facebook.stetho:stetho:$version_stetho"
     debugImplementation "com.facebook.stetho:stetho-okhttp3:$version_stetho"
     debugImplementation 'com.google.code.findbugs:jsr305:3.0.2'
-
 }
 
-//Add these lines
-def TWITTER_CONSUMER_KEY = "\"${TwitterConsumerKeyProp}\""  ?: "\"XXXXX-XXXXX-XXX\""
-def TWITTER_CONSUMER_SECRET ="\"${TwitterConsumerSecretProp}\""  ?:  "\"WWWWW-WWWWW-WWW\""
-
-android.buildTypes.each { type ->
-    type.buildConfigField 'String', 'TWITTER_CONSUMER_KEY', TWITTER_CONSUMER_KEY
-    type.buildConfigField 'String', 'TWITTER_CONSUMER_SECRET', TWITTER_CONSUMER_SECRET
+def getApiKey() {
+    def Properties props = new Properties()
+    props.load(new FileInputStream(new File('secrets.properties')))
+    return props['API_KEY']
 }
