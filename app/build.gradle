@@ -8,7 +8,13 @@ apply plugin: "androidx.navigation.safeargs.kotlin"
 allOpen {
     // allows mocking for classes w/o directly opening them for release builds
     annotation 'com.bravedroid.boilerplate.util.OpenClass'
+    annotation 'com.bravedroid.boilerplate.util.OpenClass'
 }
+def keystorePropertiesFile = rootProject.file(".properties/keystore.properties")
+// Initializes a new Properties() object called keystoreProperties.
+def keystoreProperties = new Properties()
+// Loads the keystore.properties file into the keystoreProperties object.
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
     compileSdkVersion 29
@@ -20,10 +26,36 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+    signingConfigs {
+        release {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+        }
+    }
     buildTypes {
         release {
-            minifyEnabled false
+            signingConfig signingConfigs.release
+            manifestPlaceholders = [appLabel: "Boilerplate"]
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "SERVER_URL", '"http://test.this-is-so-fake.com"'
+        }
+        debug {
+            manifestPlaceholders = [appLabel: "debug.Boilerplate"]
+            applicationIdSuffix ".debug"
+            debuggable true
+            buildConfigField "String", "SERVER_URL", '"http://dev.test.this-is-so-fake.com"'
+        }
+    }
+    flavorDimensions "pricing"
+    productFlavors {
+        pro {
+            manifestPlaceholders = [appLabelPricing: "Pro"]
+        }
+        free {
+            manifestPlaceholders = [appLabelPricing: "Free"]
         }
     }
     compileOptions {
@@ -40,7 +72,12 @@ android {
         enabled = true
     }
 }
-
+configurations {
+//    devDebugImplementation {}
+//    qaDebugImplementation {
+//    }
+//    prodDebugImplementation {}
+}
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -87,4 +124,21 @@ dependencies {
     androidTestImplementation "com.google.truth:truth:$version_truth"
     // Hamcrest library
     androidTestImplementation "org.hamcrest:hamcrest-library:$version_hamcrest_library"
+
+    //debugging
+    implementation "com.jakewharton.timber:timber:$version_timber"
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:$version_leakcanary_android"
+    debugImplementation "com.facebook.stetho:stetho:$version_stetho"
+    debugImplementation "com.facebook.stetho:stetho-okhttp3:$version_stetho"
+    debugImplementation 'com.google.code.findbugs:jsr305:3.0.2'
+
+}
+
+//Add these lines
+def TWITTER_CONSUMER_KEY = '"' + TwitterConsumerKeyProp + '"' ?: '"Define Twitter Consumer key"';
+def TWITTER_CONSUMER_SECRET = '"' + TwitterConsumerSecretProp + '"' ?: '"Define Twitter Consumer secret"';
+
+android.buildTypes.each { type ->
+    type.buildConfigField 'String', 'TWITTER_CONSUMER_KEY', TWITTER_CONSUMER_KEY
+    type.buildConfigField 'String', 'TWITTER_CONSUMER_SECRET', TWITTER_CONSUMER_SECRET
 }

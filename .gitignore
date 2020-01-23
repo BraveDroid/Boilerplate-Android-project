@@ -69,3 +69,6 @@ fastlane/test_output
 fastlane/readme.md
 
 .DS_Store
+
+#secret keys
+/.properties
