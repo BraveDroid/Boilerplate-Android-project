@@ -135,8 +135,8 @@ dependencies {
 }
 
 //Add these lines
-def TWITTER_CONSUMER_KEY = '"' + TwitterConsumerKeyProp + '"' ?: '"Define Twitter Consumer key"'
-def TWITTER_CONSUMER_SECRET = '"' + TwitterConsumerSecretProp + '"' ?: '"Define Twitter Consumer secret"'
+def TWITTER_CONSUMER_KEY = "\"${TwitterConsumerKeyProp}\""  ?: "\"XXXXX-XXXXX-XXX\""
+def TWITTER_CONSUMER_SECRET ="\"${TwitterConsumerSecretProp}\""  ?:  "\"WWWWW-WWWWW-WWW\""
 
 android.buildTypes.each { type ->
     type.buildConfigField 'String', 'TWITTER_CONSUMER_KEY', TWITTER_CONSUMER_KEY
