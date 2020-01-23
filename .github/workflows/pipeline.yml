@@ -15,6 +15,9 @@ jobs:
           java-version: 1.8
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
+      - env:
+          TwitterConsumerKeyProp=${{ secrets.TwitterConsumerKeyProp }}
+          TwitterConsumerSecretProp =${{ secrets.TwitterConsumerSecretProp }}
       - name: Unit tests
         run: bash ./gradlew test --stacktrace
 
