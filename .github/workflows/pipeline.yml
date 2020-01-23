@@ -13,8 +13,9 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
-          TwitterConsumerKeyProp: ${{ secrets.TwitterConsumerKeyProp }}
-          TwitterConsumerSecretProp: ${{ secrets.TwitterConsumerSecretProp }}
+        env:
+          TwitterConsumerKeyProp: ${{secrets.TwitterConsumerKeyProp}}
+          TwitterConsumerSecretProp: ${{secrets.TwitterConsumerSecretProp}}
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Unit tests
