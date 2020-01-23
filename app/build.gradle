@@ -10,11 +10,6 @@ allOpen {
     annotation 'com.bravedroid.boilerplate.util.OpenClass'
     annotation 'com.bravedroid.boilerplate.util.OpenClass'
 }
-def keystorePropertiesFile = rootProject.file(".properties/keystore.properties")
-// Initializes a new Properties() object called keystoreProperties.
-def keystoreProperties = new Properties()
-// Loads the keystore.properties file into the keystoreProperties object.
-keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
     compileSdkVersion 29
@@ -27,11 +22,16 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     signingConfigs {
+        def keystorePropertiesFile = rootProject.file(".properties/keystore.properties")
+        def keystoreProperties = new Properties()
+        if (keystorePropertiesFile.exists()) {
+            keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+        }
         release {
-            keyAlias keystoreProperties['keyAlias']
-            keyPassword keystoreProperties['keyPassword']
-            storeFile file(keystoreProperties['storeFile'])
-            storePassword keystoreProperties['storePassword']
+            keyAlias keystoreProperties['keyAlias'] ?: "keystore"
+            keyPassword keystoreProperties['keyPassword'] ?: "H888h888"
+            storePassword keystoreProperties['storePassword'] ?: "H888h888"
+            storeFile file(keystoreProperties['storeFile'] ?: ".keystore/boilerplate_keystore.jks")
         }
     }
     buildTypes {
@@ -135,8 +135,8 @@ dependencies {
 }
 
 //Add these lines
-def TWITTER_CONSUMER_KEY = '"' + TwitterConsumerKeyProp + '"' ?: '"Define Twitter Consumer key"';
-def TWITTER_CONSUMER_SECRET = '"' + TwitterConsumerSecretProp + '"' ?: '"Define Twitter Consumer secret"';
+def TWITTER_CONSUMER_KEY = '"' + TwitterConsumerKeyProp + '"' ?: '"Define Twitter Consumer key"'
+def TWITTER_CONSUMER_SECRET = '"' + TwitterConsumerSecretProp + '"' ?: '"Define Twitter Consumer secret"'
 
 android.buildTypes.each { type ->
     type.buildConfigField 'String', 'TWITTER_CONSUMER_KEY', TWITTER_CONSUMER_KEY
