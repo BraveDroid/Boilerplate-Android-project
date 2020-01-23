@@ -3,6 +3,7 @@ name: Android CI
 on: [push, pull_request]
 
 jobs:
+
   test:
     name: Run Unit Tests
     runs-on: ubuntu-18.04
@@ -22,7 +23,6 @@ jobs:
         run: bash ./gradlew test --stacktrace
 
   build:
-
     name: Build It All
     runs-on: ubuntu-latest
 
