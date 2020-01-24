@@ -55,13 +55,33 @@ android {
             buildConfigField "String", "SERVER_URL", '"http://test.http://bravedroid.com"'
         }
     }
-    flavorDimensions "pricing"
+    flavorDimensions "pricing", "env"
     productFlavors {
         pro {
+            dimension "pricing"
             manifestPlaceholders = [appLabelPricing: "Pro"]
+            applicationIdSuffix ".pro"
         }
         free {
+            dimension "pricing"
             manifestPlaceholders = [appLabelPricing: "Free"]
+            applicationIdSuffix ".free"
+        }
+
+        prod {
+            dimension "env"
+            manifestPlaceholders = [appLabelPricing: "Normal"]
+        }
+        qa {
+            dimension "env"
+            applicationIdSuffix ".qa"
+            manifestPlaceholders = [appLabelPricing: "Normal"]
+
+        }
+        dev {
+            dimension "env"
+            applicationIdSuffix ".dev"
+            manifestPlaceholders = [appLabelPricing: "Normal"]
         }
     }
     compileOptions {
@@ -79,9 +99,13 @@ android {
     }
 }
 
+configurations {
+    freeDevDebugImplementation {}
+    proDevDebugImplementation {}
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
 
     //kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$version_kotlin"
@@ -96,7 +120,6 @@ dependencies {
     //ui tools
     implementation "androidx.constraintlayout:constraintlayout:$version_constraintlayout"
     implementation "com.google.android.material:material:$version_android_material"
-
 
     ///jvm-tests
     testImplementation "junit:junit:$version_junit"
@@ -128,10 +151,11 @@ dependencies {
 
     //debugging
     implementation "com.jakewharton.timber:timber:$version_timber"
-    debugImplementation "com.squareup.leakcanary:leakcanary-android:$version_leakcanary_android"
+    freeDevDebugImplementation "com.squareup.leakcanary:leakcanary-android:$version_leakcanary_android"
+    proDevDebugImplementation "com.squareup.leakcanary:leakcanary-android:$version_leakcanary_android"
     debugImplementation "com.facebook.stetho:stetho:$version_stetho"
     debugImplementation "com.facebook.stetho:stetho-okhttp3:$version_stetho"
-    debugImplementation 'com.google.code.findbugs:jsr305:3.0.2'
+    debugImplementation "com.google.code.findbugs:jsr305:$version_jsr305"
 }
 
 def getApiKey() {

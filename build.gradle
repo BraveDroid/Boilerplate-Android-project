@@ -29,6 +29,7 @@ buildscript {
         version_timber = "4.7.1"
         version_leakcanary_android = "2.1"
         version_stetho = "1.5.1"
+        version_jsr305 = "3.0.2"
     }
 
     repositories {
