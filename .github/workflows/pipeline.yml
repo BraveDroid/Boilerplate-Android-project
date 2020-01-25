@@ -31,3 +31,13 @@ jobs:
         run: chmod +x gradlew
       - name: Build with Gradle
         run: ./gradlew assembleDebug -PTwitterConsumerKeyProp=${{secrets.TwitterConsumerKeyProp}} -PTwitterConsumerSecretProp=${{secrets.TwitterConsumerSecretProp}} --stacktrace
+
+  script:
+      name: Run some bashScripts
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v1
+        - name: testing bash
+          run: |
+            chmod +x ./scripts/script.sh
+            ./scripts/script.sh
