@@ -39,7 +39,7 @@ jobs:
         - uses: actions/checkout@v1
         - name: testing bash
           env: # Or as an environment variable
-            super_secret: ${{ secrets.$NonSecret }}
+            NonSecret: ${{ secrets.$NonSecret }}
           run: |
             chmod +x ./scripts/script.sh
             ./scripts/script.sh
