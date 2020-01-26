@@ -20,7 +20,7 @@ echo "$KEY_PASSWORD"
 #KEYSTORE_PASSWORD="H888h888"
 #STORE_FILE_BASE64="aaaaaaaaaa"
 
-#echo $STORE_FILE_BASE64 | base64 -d > my.keystore
+echo $STORE_FILE_BASE64 | base64 -d > app/.keystore/boilerplate_keystore.jks
 echo "storeFile=$KEYSTORE_PATH" > signing.properties
 echo "storePassword=$KEYSTORE_PASSWORD" >> signing.properties
 echo "keyAlias=$ALIAS" >> signing.properties
