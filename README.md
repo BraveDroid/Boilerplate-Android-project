@@ -13,3 +13,9 @@ Boilerplate Android project setup
 - tests (instruments/jvm)
 - kotlin java8
 - databinding
+
+
+ 
+| Build type|Debug| Release|
+|:-------------:|:-------------:|:-----:|
+|Description| possibility to see logs, "applicationIdSuffix".debug |  report crashes and no possibility for debugging |

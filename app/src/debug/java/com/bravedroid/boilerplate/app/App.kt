@@ -5,11 +5,11 @@ import com.facebook.stetho.Stetho
 import timber.log.Timber
 
 
-class App : AbstractApp() {
+class App : BaseApp() {
     override fun initDebuggingTools() {
+        enabledStrictMode()
         Stetho.initializeWithDefaults(this)
         Timber.plant(Timber.DebugTree())
-        enabledStrictMode()
     }
 
     private fun enabledStrictMode() {

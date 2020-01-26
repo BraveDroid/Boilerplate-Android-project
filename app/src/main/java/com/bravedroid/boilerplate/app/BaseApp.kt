@@ -4,7 +4,7 @@ import android.app.Application
 import android.os.SystemClock
 import timber.log.Timber
 
-abstract class AbstractApp : Application() {
+abstract class BaseApp : Application() {
     override fun onCreate() {
         super.onCreate()
         val startTime = SystemClock.elapsedRealtime()

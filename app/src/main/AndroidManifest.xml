@@ -5,7 +5,6 @@
 
     <application
         android:name=".app.App"
-        android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="${appLabelPricing}_${appLabel}"
         android:roundIcon="@mipmap/ic_launcher_round"
