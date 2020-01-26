@@ -22,8 +22,22 @@ android {
         buildConfigField 'String', 'TWITTER_CONSUMER_KEY', "\"${TwitterConsumerKeyProp}\""
         buildConfigField 'String', 'TWITTER_CONSUMER_SECRET', "\"${TwitterConsumerSecretProp}\""
     }
-    def isFromGithubActions = System.getenv("IS_FROM_GITHUB_ACTIONS")
-    if (isFromGithubActions == null) {
+//    def isFromGithubActions = System.getenv("IS_FROM_GITHUB_ACTIONS")
+    def signingProperties = rootProject.file("scripts/signing.properties")
+    if (signingProperties.exists()) {
+        def keystoreProperties = new Properties()
+        keystoreProperties.load(new FileInputStream(signingProperties))
+        signingConfigs {
+            release {
+                keyAlias keystoreProperties['keyAlias']
+                keyPassword keystoreProperties['keyPassword']
+                storePassword keystoreProperties['storePassword']
+                def storeFileObject = keystoreProperties['storeFile']
+                if (storeFileObject != null && storeFileObject != "")
+                    storeFile file(storeFileObject)
+            }
+        }
+    } else {
         signingConfigs {
             def keystorePropertiesFile = rootProject.file(".properties/keystore.properties")
             def keystoreProperties = new Properties()

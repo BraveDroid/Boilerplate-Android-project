@@ -4,16 +4,14 @@ import android.util.Log
 import com.bravedroid.boilerplate.BuildConfig
 import timber.log.Timber
 
-class App : AbstractApp() {
+class App : BaseApp() {
     override fun initDebuggingTools() {
         if (BuildConfig.DEBUG)
             Timber.plant(Timber.DebugTree())
         else
             Timber.plant(CrashReportingTree())
-
     }
 }
-
 
 private class CrashReportingTree : Timber.Tree() {
     override fun log(

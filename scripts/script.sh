@@ -4,10 +4,14 @@
 # -------------------------------------------------
 # Define bash shell variable called var
 # Avoid spaces around the assignment operator (=)
-var="Hello World"
+welcomeMsg="Hello World"
 # print it
-echo "$var"
+echo "$welcomeMsg"
 echo "$NonSecret"
+echo "$KEYSTORE_PATH"
+echo "$KEYSTORE_PASSWORD"
+echo "$ALIAS"
+echo "$KEY_PASSWORD"
 # Another way of printing it
 #printf "%s\n" "$var"
 #KEYSTORE_PATH=".keystore/boilerplate_keystore.jks"
@@ -15,8 +19,9 @@ echo "$NonSecret"
 #KEY_PASSWORD="H888h888"
 #KEYSTORE_PASSWORD="H888h888"
 #STORE_FILE_BASE64="aaaaaaaaaa"
-##echo $STORE_FILE_BASE64 | base64 -d > my.keystore
-#echo "storeFile=$KEYSTORE_PATH" > signing.properties
-#echo "storePassword=$KEYSTORE_PASSWORD" >> signing.properties
-#echo "keyAlias=$ALIAS" >> signing.properties
-#echo "keyPassword=$KEY_PASSWORD" >> signing.properties
+
+#echo $STORE_FILE_BASE64 | base64 -d > my.keystore
+echo "storeFile=$KEYSTORE_PATH" > signing.properties
+echo "storePassword=$KEYSTORE_PASSWORD" >> signing.properties
+echo "keyAlias=$ALIAS" >> signing.properties
+echo "keyPassword=$KEY_PASSWORD" >> signing.properties
