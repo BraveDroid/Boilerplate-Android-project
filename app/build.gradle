@@ -29,12 +29,23 @@ android {
         keystoreProperties.load(new FileInputStream(signingProperties))
         signingConfigs {
             release {
-                keyAlias keystoreProperties['keyAlias']
-                keyPassword keystoreProperties['keyPassword']
-                storePassword keystoreProperties['storePassword']
-                def storeFileObject = keystoreProperties['storeFile']
-                if (storeFileObject != null && storeFileObject != "")
-                    storeFile file(storeFileObject)
+                def _keyAlias = keystoreProperties['keyAlias']
+                keyAlias _keyAlias
+                project.logger.info("my info message $_keyAlias")
+
+                def _keyPassword = keystoreProperties['keyPassword']
+                keyPassword _keyPassword
+                project.logger.info("my info message $_keyPassword")
+
+                def _storePassword = keystoreProperties['storePassword']
+                storePassword _storePassword
+                project.logger.info("my info message $_storePassword")
+
+                def _storeFile = keystoreProperties['storeFile']
+                if (_storeFile != null && _storeFile != "") {
+                    project.logger.info("my info message $_storeFile")
+                    storeFile file(_storeFile)
+                }
             }
         }
     } else {
