@@ -67,17 +67,16 @@ jobs:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           ALIAS: ${{ secrets.ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-#        run: |
-#          chmod +x ./scripts/script.sh
-#          ./scripts/script.sh
+         run: |
+          echo "storeFile=$KEYSTORE_PATH" > signing.properties
+          echo "storePassword=$KEYSTORE_PASSWORD" >> signing.properties
+          echo "keyAlias=$ALIAS" >> signing.properties
+          echo "keyPassword=$KEY_PASSWORD" >> signing.properties
+
       - name: Set up JDK 1.8
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
-      - run: echo "storeFile=$KEYSTORE_PATH" > signing.properties
-      - run: echo "storePassword=$KEYSTORE_PASSWORD" >> signing.properties
-      - run: echo "keyAlias=$ALIAS" >> signing.properties
-      - run: echo "keyPassword=$KEY_PASSWORD" >> signing.properties
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Build with Gradle
