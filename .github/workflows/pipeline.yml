@@ -68,10 +68,10 @@ jobs:
           ALIAS: ${{ secrets.ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
          run: |
-          echo "storeFile=$KEYSTORE_PATH" > signing.properties
-          echo "storePassword=$KEYSTORE_PASSWORD" >> signing.properties
-          echo "keyAlias=$ALIAS" >> signing.properties
-          echo "keyPassword=$KEY_PASSWORD" >> signing.properties
+           echo "storeFile=$KEYSTORE_PATH" > signing.properties
+           echo "storePassword=$KEYSTORE_PASSWORD" >> signing.properties
+           echo "keyAlias=$ALIAS" >> signing.properties
+           echo "keyPassword=$KEY_PASSWORD" >> signing.properties
 
       - name: Set up JDK 1.8
         uses: actions/setup-java@v1
