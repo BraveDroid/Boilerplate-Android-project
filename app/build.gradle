@@ -31,19 +31,19 @@ android {
             release {
                 def _keyAlias = keystoreProperties['keyAlias']
                 keyAlias _keyAlias
-                project.logger.info("my info message $_keyAlias")
+                println("my info message $_keyAlias")
 
                 def _keyPassword = keystoreProperties['keyPassword']
                 keyPassword _keyPassword
-                project.logger.info("my info message $_keyPassword")
+                println("my info message $_keyPassword")
 
                 def _storePassword = keystoreProperties['storePassword']
                 storePassword _storePassword
-                project.logger.info("my info message $_storePassword")
+                println("my info message $_storePassword")
 
                 def _storeFile = keystoreProperties['storeFile']
                 if (_storeFile != null && _storeFile != "") {
-                    project.logger.info("my info message $_storeFile")
+                    println("my info message $_storeFile")
                     storeFile file(_storeFile)
                 }
             }
