@@ -54,4 +54,4 @@ jobs:
         - name: Grant execute permission for gradlew
           run: chmod +x gradlew
         - name: Build with Gradle
-          run: ./gradlew assembleRelease -PTwitterConsumerKeyProp=${{secrets.TwitterConsumerKeyProp}} -PTwitterConsumerSecretProp=${{secrets.TwitterConsumerSecretProp}} --stacktrace --debug
+          run: ./gradlew assembleRelease -PTwitterConsumerKeyProp=${{secrets.TwitterConsumerKeyProp}} -PTwitterConsumerSecretProp=${{secrets.TwitterConsumerSecretProp}} --stacktrace 
